@@ -16,3 +16,8 @@ def get_links():
 
 def get_scoreboard():
     scoreboard = get_links()['currentScoreboard'] # builds on the previous method
+    data = get(BASE_URL + scoreboard).json()['games']
+
+    printer.pprint(data) # print out the keys (it's a dictionary) because otherwise it's hard to read.
+
+get_scoreboard()
