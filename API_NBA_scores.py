@@ -16,8 +16,17 @@ def get_links():
 
 def get_scoreboard():
     scoreboard = get_links()['currentScoreboard'] # builds on the previous method
-    data = get(BASE_URL + scoreboard).json()['games']
+    games = get(BASE_URL + scoreboard).json()['games']
 
-    printer.pprint(data) # print out the keys (it's a dictionary) because otherwise it's hard to read.
-
+    for game in games:  # to pull these specific items out of the dictionary 
+        home_team = game['hTeam']
+        away_team = game['vTeam']
+        clock = game['clock']
+        period = game['period']
+        
+        print("-----------------------------------------------")
+        print(f"{home_team['triCode']} vs. {away_team['triCode']}, {clock}, {period}")  # can drill into the data for more specific name
+        
+        # printer.pprint(game.keys()) # print out the keys (it's a dictionary) because otherwise it's hard to read.
+        # break
 get_scoreboard()
