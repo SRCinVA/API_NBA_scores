@@ -33,8 +33,8 @@ def get_scoreboard():
         # break
 def get_stats():
     stats = get_links()['leagueTeamStatsLeaders']
-    data = get(BASE_URL + stats).json()
-
-    printer.pprint(data)
+    teams = get(BASE_URL + stats).json()['league']['standard']['regularSeason']['teams'] # note that the next is embedded in the previous.
+            # last item in the dictionary has to be the variable name? Unclear ... 
+    printer.pprint(teams[0].keys())  # teams is a list, so he is pulling out an index, but it pulls out many items ... don't get that ...
 
 get_stats()
