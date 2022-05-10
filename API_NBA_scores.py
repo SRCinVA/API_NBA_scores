@@ -25,8 +25,16 @@ def get_scoreboard():
         period = game['period']
         
         print("-----------------------------------------------")
-        print(f"{home_team['triCode']} vs. {away_team['triCode']}, {clock}, {period}")  # can drill into the data for more specific name
-        
+        print(f"{home_team['triCode']} vs. {away_team['triCode']}")  # can drill into the data for more specific name
+        print(f"{home_team['score']} - {away_team['score']}")
+        print(f"{clock} - {period['current']}")
+
         # printer.pprint(game.keys()) # print out the keys (it's a dictionary) because otherwise it's hard to read.
         # break
-get_scoreboard()
+def get_stats():
+    stats = get_links()['leagueTeamStatsLeaders']
+    data = get(BASE_URL + stats).json()
+
+    printer.pprint(data)
+
+get_stats()
