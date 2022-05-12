@@ -35,6 +35,15 @@ def get_stats():
     stats = get_links()['leagueTeamStatsLeaders']
     teams = get(BASE_URL + stats).json()['league']['standard']['regularSeason']['teams'] # note that the next is embedded in the previous.
             # last item in the dictionary has to be the variable name? Unclear ... 
-    printer.pprint(teams[0].keys())  # teams is a list, so he is pulling out an index, but it pulls out many items ... don't get that ...
+    
+    # to get them to present in the order of their rank 
+    teams = list(filter(lambda x: x['name'] != "Team", teams)) # the lambda will run a function against every single element in "teams."
+                                                                # if that function returns True, it will keep the element; if not, it will discard. We don't want to grab the filler "Team" dictionaries. 
+                                                                # need to cast the filter as a list
+    for team in teams: # now we can loop through each team to pick up the information below:
+        name = team['name']
+        nickname = team['nickname']
+        ppg = team['ppg']
+        print(f"{name} - {nickname} - {ppg}")
 
 get_stats()
