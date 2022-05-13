@@ -40,10 +40,15 @@ def get_stats():
     teams = list(filter(lambda x: x['name'] != "Team", teams)) # the lambda will run a function against every single element in "teams."
                                                                 # if that function returns True, it will keep the element; if not, it will discard. We don't want to grab the filler "Team" dictionaries. 
                                                                 # need to cast the filter as a list
-    for team in teams: # now we can loop through each team to pick up the information below:
+    # next is to sort them acc. to rank and points:
+    teams.sort(key=lambda x:int(x['ppg']['rank'])) # 'rank' is nested in the dict. 'ppg', which e are grabbing for each team and casting as an int. 
+                                                    # key is necessary for .sort() to do its thing...
+
+    for i, team in enumerate(teams): # now we can loop through each team to pick up the information below:
+                        # not sure how enumerate works with this ...
         name = team['name']
         nickname = team['nickname']
-        ppg = team['ppg']
-        print(f"{name} - {nickname} - {ppg}")
+        ppg = team['ppg']['avg']  # if we drill down to 'avg', it cleans up the appearance considerably.
+        print(f"{i + 1}. {name} - {nickname} - {ppg}")
 
 get_stats()
